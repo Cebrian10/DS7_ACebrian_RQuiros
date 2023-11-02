@@ -34,8 +34,8 @@ class Controller
 
                 $usuario->name = $_REQUEST['name'];
                 $usuario->email = $_REQUEST['email'];
-                $usuario->password = $_REQUEST['pass'];
-                $usuario->hashedPassword = password_hash($usuario->password, PASSWORD_DEFAULT);
+                $usuario->pass = $_REQUEST['pass'];
+                $usuario->hashedPassword = password_hash($usuario->pass, PASSWORD_DEFAULT);
 
                 $result = $this->model->RegisterModel($usuario);
                 if ($result === true) {
@@ -51,16 +51,16 @@ class Controller
     {
         $usuario = new Model();
 
-        $usuario->name = $_REQUEST['email'];
-        $usuario->email = $_REQUEST['pass'];
+        $usuario->email = $_REQUEST['email'];
+        $usuario->pass = $_REQUEST['pass'];
 
-        if (!$this->model->LoginModel($usuario)) {
-            if ($this->model->VerificarSesion($usuario)) {
-                // $this->model->ObtenerDatosUsuario($usuario); 
-                header('Location: ?op=home');
-            } else {
-                header('Location: ?op=login&msg=Error... Sesión Existente');
-            }
+        if ($this->model->LoginModel($usuario)) {
+            // if ($this->model->VerificarSesion($usuario)) {
+            //     // $this->model->ObtenerDatosUsuario($usuario); 
+            header('Location: ?op=home&msg=Bienvenido');
+            // } else {
+            //     header('Location: ?op=login&msg=Error... Sesión Existente');
+            // }
         } else {
             header('Location: ?op=login&msg=Error... Credenciales Inválidas');
         }
@@ -70,12 +70,14 @@ class Controller
     //     return $this->model->GetComputersModel();
     // }
 
-    public function GetComputersController($selectedSalonId) {
+    public function GetComputersController($selectedSalonId)
+    {
         return $this->model->GetComputersModel($selectedSalonId);
     }
 
 
-    public function GetSalonesController(){
+    public function GetSalonesController()
+    {
         return $this->model->GetSalonesModel();
     }
 

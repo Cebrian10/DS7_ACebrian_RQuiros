@@ -8,7 +8,7 @@ class Model
     private $pdo;
     public $name;
     public $email;
-    public $password;
+    public $pass;
     public $hashedPassword;
     public $rol;
     public function __CONSTRUCT()
@@ -63,7 +63,7 @@ class Model
             $stmt->execute([$data->email]);
             $result = $stmt->fetch();
 
-            return ($result && password_verify($data->password, $result['pass']));
+            return ($result && password_verify($data->pass, $result['pass']));
         } catch (Exception $e) {
             session_destroy();
             die($e->getMessage());
