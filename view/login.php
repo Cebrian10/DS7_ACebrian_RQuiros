@@ -32,7 +32,7 @@
 
     <section class="section-principal">        
         <section class="section-2">
-            <form method="post" action="?op=verificar">
+            <form method="post" action="?op=loginController">
                 <h2>Iniciar Sesión</h2>
                 <div class="flex-column">
                     <label>Correo electronico</label>

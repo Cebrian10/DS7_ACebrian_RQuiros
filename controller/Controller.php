@@ -47,7 +47,53 @@ class Controller
         }
     }
 
+    public function LoginController()
+    {
+        $usuario = new Model();
+
+        $usuario->name = $_REQUEST['email'];
+        $usuario->email = $_REQUEST['pass'];
+
+        if (!$this->model->LoginModel($usuario)) {
+            if ($this->model->VerificarSesion($usuario)) {
+                // $this->model->ObtenerDatosUsuario($usuario); 
+                header('Location: ?op=home');
+            } else {
+                header('Location: ?op=login&msg=Error... Sesión Existente');
+            }
+        } else {
+            header('Location: ?op=login&msg=Error... Credenciales Inválidas');
+        }
+    }
+
+    // public function GetComputersController(){
+    //     return $this->model->GetComputersModel();
+    // }
+
+    public function GetComputersController($selectedSalonId) {
+        return $this->model->GetComputersModel($selectedSalonId);
+    }
+
+
+    public function GetSalonesController(){
+        return $this->model->GetSalonesModel();
+    }
+
     public function Logout()
     {
+        $usuario = new Model();
+        $usuario->email = $_SESSION['user_email'];
+
+        if (isset($_SESSION['sesiones_activas'])) {
+            $sesiones_activas = $_SESSION['sesiones_activas'];
+            $user_id = array_search($usuario->email, $sesiones_activas);
+
+            if ($user_id !== false) {
+                unset($sesiones_activas[$user_id]);
+                $_SESSION['sesiones_activas'] = $sesiones_activas;
+            }
+        }
+        session_destroy();
+        header('Location: ?op=home');
     }
 }
