@@ -11,11 +11,25 @@
 
 <body>
     <div class="flotante">
-        <a href="?=./">
+        <a href="javascript:history.back();">
             <img src="public/img/atras.png" alt="atras">
             <button>Volver</button>
         </a>
-    </div>    
+    </div>
+
+    <?php
+    if (isset($_GET['msg'])) {
+        $mensaje = htmlspecialchars($_GET['msg']);       
+        if ($mensaje === 'Registro Exitoso') {            
+            $clase_alerta = 'alerta-success';
+        }
+        else{
+            $clase_alerta = 'alerta-danger';
+        }
+        echo '<div class=" alerta ' . $clase_alerta . ' "><p>' . $mensaje . '</p></div>';
+    }
+    ?>
+
     <section class="section-principal">        
         <section class="section-2">
             <form method="post" action="?op=verificar">
@@ -40,6 +54,7 @@
             <img src="public/img/utp-icon.png" alt="utp-logo" class="img-login">
         </section>
     </section>
+    <script src="public/js/login.js"></script>
 </body>
 
 </html>

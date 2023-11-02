@@ -1,4 +1,4 @@
-Script DS7
+-- Script DS7
 
 -- Crear la base de datos
 CREATE DATABASE bdds7;
@@ -17,18 +17,44 @@ INSERT INTO salones (name) VALUES
     ('Salón 4-401'),
     ('Salón 4-402');
 
+-- Crear la tabla 'ususarios'
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    pass VARCHAR(255),
+    rol VARCHAR(255)
+);
+
+-- Insertar datos en la tabla 'usuarios'
+INSERT INTO usuarios (name, email, pass, rol) VALUES
+('admin','admin@gmail.com','admin','adm'),
+('user','user@gmail.com','user','usr');
+
+-- Crear la tabla 'reservas'
+CREATE TABLE reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    day DATE,
+    start_time TIME,
+    end_time TIME,
+    id_usuarios INT,
+    FOREIGN KEY (id_usuarios) REFERENCES usuarios(id)
+);
+
 -- Crear la tabla 'computadoras'
 CREATE TABLE computadoras (
     id INT AUTO_INCREMENT PRIMARY KEY,
     img VARCHAR(255),
     name VARCHAR(255),
     status VARCHAR(255),
-    salon_id INT,
-    FOREIGN KEY (salon_id) REFERENCES salones(id)
+    id_salon INT,
+    FOREIGN KEY (id_salon) REFERENCES salones(id),
+    id_reserva INT,
+    FOREIGN KEY (id_reserva) REFERENCES reservas(id)
 );
 
 -- Insertar registros en la tabla 'computadoras'
-INSERT INTO computadoras (img, name, status, salon_id) VALUES 
+INSERT INTO computadoras (img, name, status, id_salon) VALUES 
 ('1_pc.png', 'Equipo 401-1', 'disponible', 1),
 ('2_pc.png', 'Equipo 401-2', 'disponible', 1),
 ('3_pc.png', 'Equipo 401-3', 'disponible', 1),
@@ -59,4 +85,3 @@ INSERT INTO computadoras (img, name, status, salon_id) VALUES
 ('28_pc.png', 'Equipo 402-13', 'disponible', 2),
 ('29_pc.png', 'Equipo 402-14', 'disponible', 2),
 ('30_pc.png', 'Equipo 402-15', 'disponible', 2);
-

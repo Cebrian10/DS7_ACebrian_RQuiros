@@ -11,17 +11,31 @@
 
 <body>
     <div class="flotante">
-        <a href="?=./">
+        <a href="javascript:history.back();">
             <img src="public/img/atras.png" alt="atras">
             <button>Volver</button>
         </a>
     </div>
+
+    <?php
+    if (isset($_GET['msg'])) {
+        $mensaje = htmlspecialchars($_GET['msg']);       
+        if ($mensaje === 'Error al registrar... El correo ya está registrado') {            
+            $clase_alerta = 'alerta-danger';
+        }
+        else{
+            $clase_alerta = 'alerta-success';
+        }
+        echo '<div class=" alerta ' . $clase_alerta . ' "><p>' . $mensaje . '</p></div>';
+    }
+    ?>
+
     <section class="section-principal">
         <section class="section-1">
             <img src="public/img/utp-icon.png" alt="utp-logo" class="img-register">
         </section>
         <section class="section-2">
-            <form method="post" action="?op=guardar">
+            <form method="post" action="?op=registerController">
                 <h2>Formulario de Registro</h2>
                 <div class="flex-column">
                     <label>Nombre:</label>
@@ -42,6 +56,7 @@
             </form>
         </section>
     </section>
+    <script src="public/js/register.js"></script>
 </body>
 
 </html>
