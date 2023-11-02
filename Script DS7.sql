@@ -28,8 +28,8 @@ CREATE TABLE usuarios (
 
 -- Insertar datos en la tabla 'usuarios'
 INSERT INTO usuarios (name, email, pass, rol) VALUES
-('admin','admin@gmail.com','admin','adm'),
-('user','user@gmail.com','user','usr');
+('admin','admin@gmail.com','$2y$10$MRX.QaY3I7D5cfDZEcDiEOu4dmFXQIYg0QDHsDfVzRvipxUKjqYcq','adm'),
+('user','user@gmail.com','$2y$10$2zHzBXIUg2M6qrU93bqhe.3qgYux9mUITUa7yv5j4bOFMoUO9T3tO','usr');
 
 -- Crear la tabla 'reservas'
 CREATE TABLE reservas (
