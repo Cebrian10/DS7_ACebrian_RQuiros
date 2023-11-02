@@ -8,13 +8,21 @@ if (isset($_GET['op'])){
     $opcion = $_GET['op'];
 
     switch ($opcion){
-        case "": ;
+        case "home": $controller->Home();
             break;
-        default: $controller->Index();;
+        case "login": $controller->Login();
+            break;
+        case "profile": $controller->Profile();
+            break;        
+        case "register": $controller->Register();
+            break;
+        case "logout": $controller->Logout();
+            break;
+        default: $controller->Home();
             break;
     }
 }else {
-    $controller->Index();
+    $controller->Home();
 }
 
 ?>
