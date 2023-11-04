@@ -1,31 +1,53 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     const salonSelect = document.getElementById('salonSelect');
-//     const equipos = document.querySelectorAll('.eq');
+document.addEventListener("DOMContentLoaded", function () {
+    const salonSelect = document.getElementById('salonSelect');
+    const equipos = document.querySelectorAll('.eq');
+    const lineas = document.querySelectorAll('.linea');
 
-//     salonSelect.addEventListener('change', function() {
-//         const selectedSalonId = salonSelect.value;
+    salonSelect.addEventListener('change', function () {
+        const selectedSalonId = salonSelect.value;
 
-//         equipos.forEach(equipo => {
-//             const id = equipo.classList[1]; // Obtén el id del equipo
-//             if (id === 'eq' + selectedSalonId) {
-//                 equipo.style.display = 'block'; // Mostrar el equipo si coincide
-//             } else {
-//                 equipo.style.display = 'none'; // Ocultar los demás equipos
-//             }
-//         });
-//     });
+        // Ocultar todas las líneas al principio
+        lineas.forEach(linea => {
+            linea.style.display = 'none';
+        });
 
-//     // Oculta todas las computadoras al principio
-//     equipos.forEach(equipo => {
-//         equipo.style.display = 'none';
-//     });
+        equipos.forEach(equipo => {
+            const salonId = equipo.getAttribute('data-salon-id'); // Obtén el valor del atributo personalizado 'data-salon-id'
+            if (salonId === selectedSalonId) {
+                equipo.style.display = 'flex'; // Mostrar el equipo si coincide
 
-//     // Muestra las del salón predeterminado (si lo hay)
-//     const selectedSalonId = salonSelect.value;
-//     equipos.forEach(equipo => {
-//         const id = equipo.classList[1];
-//         if (id === 'eq' + selectedSalonId) {
-//             equipo.style.display = 'block';
-//         }
-//     });
-// });
+                // Mostrar la línea que contiene el equipo
+                const linea = equipo.closest('.linea');
+                linea.style.display = 'flex';
+            } else {
+                equipo.style.display = 'none'; // Ocultar los demás equipos
+            }
+        });
+
+    });
+
+    // Ocultar todas las computadoras y líneas al principio
+    equipos.forEach(equipo => {
+        equipo.style.display = 'none';
+    });
+
+    lineas.forEach(linea => {
+        linea.style.display = 'none';
+    });
+
+    // Mostrar las del salón predeterminado (si lo hay)
+    const selectedSalonId = salonSelect.value;
+    equipos.forEach(equipo => {
+        const salonId = equipo.getAttribute('data-salon-id'); // Obtén el valor del atributo personalizado 'data-salon-id'
+        if (salonId === selectedSalonId) {
+            equipo.style.display = 'flex'; // Mostrar el equipo si coincide
+
+            // Mostrar la línea que contiene el equipo
+            const linea = equipo.closest('.linea');
+            linea.style.display = 'flex';
+        } else {
+            equipo.style.display = 'none'; // Ocultar los demás equipos
+        }
+    });
+
+});

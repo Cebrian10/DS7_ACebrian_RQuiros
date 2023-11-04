@@ -1,8 +1,7 @@
 <?php
 $controller = new Controller();
 $salones = $controller->GetSalonesController();
-$id_salon = 2;
-$equipos = $controller->GetComputersController($id_salon);
+$equipos = $controller->GetComputersController();
 
 $equiposPorLinea = 5;
 $totalEquipos = count($equipos);
@@ -23,7 +22,18 @@ $totalEquipos = count($equipos);
     <nav>
         <div class="img-label">
             <img src="public/img/utp-icon.png" alt="utp">
-            <a href="?op=profile"><label>Visitante</label></a>
+            <a href="?op=profile">
+                <label>
+                    <?php
+                    if (isset($_SESSION['user_name'])) {
+                        echo $_SESSION['user_name'];
+                    } else {
+                        echo 'Visitante';
+                    }
+                    ?>
+                </label>
+
+            </a>
         </div>
         <div class="botones">
             <a href="?op=register"><button type="button">Registrarse</button></a>
@@ -59,7 +69,7 @@ $totalEquipos = count($equipos);
                 for ($j = $i; $j < min($i + $equiposPorLinea, $totalEquipos); $j++) {
                     $equipo = $equipos[$j];
                     echo '<a href="?op=reserve">';
-                    echo '<div class="eq eq' . $equipo['id'] . '">';
+                    echo '<div class="eq eq' . $equipo['id'] . '" data-salon-id="' . $equipo['id_salon'] . '">';
                     echo '<img src="public/img/pc.png" alt="pc' . $equipo['id'] . '">';
                     echo '<label>' . $equipo['name'] . '</label>';
                     echo '<p>' . $equipo['status'] . '</p>';

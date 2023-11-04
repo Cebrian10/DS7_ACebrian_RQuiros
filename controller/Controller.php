@@ -56,7 +56,7 @@ class Controller
 
         if ($this->model->LoginModel($usuario)) {
             // if ($this->model->VerificarSesion($usuario)) {
-            //     // $this->model->ObtenerDatosUsuario($usuario); 
+            $this->model->ObtenerDatosUser($usuario);
             header('Location: ?op=home&msg=Bienvenido');
             // } else {
             //     header('Location: ?op=login&msg=Error... Sesión Existente');
@@ -66,15 +66,10 @@ class Controller
         }
     }
 
-    // public function GetComputersController(){
-    //     return $this->model->GetComputersModel();
-    // }
-
-    public function GetComputersController($selectedSalonId)
+    public function GetComputersController()
     {
-        return $this->model->GetComputersModel($selectedSalonId);
+        return $this->model->GetComputersModel();
     }
-
 
     public function GetSalonesController()
     {
