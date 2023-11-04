@@ -16,6 +16,7 @@ $totalEquipos = count($equipos);
     <link rel="icon" type="image/png" href="public/img/utp-icon.png">
     <title>Reserva de Equipo</title>
     <link rel="stylesheet" href="public/css/home.css">
+    <link rel="stylesheet" href="public/css/reloj.css">
 </head>
 
 <body>
@@ -40,6 +41,11 @@ $totalEquipos = count($equipos);
     <section class="section-principal">
         <section class="section-1">
             <div class="selec-salon">
+             <div id="reloj">
+                <span id="horas">00</span>:
+                <span id="minutos">00</span>:
+                <span id="segundos">00</span>
+                </div>
                 <label>Seleccionar salón</label>
                 <select name="select" id="salonSelect">
                     <?php
@@ -51,28 +57,32 @@ $totalEquipos = count($equipos);
             </div>
         </section>
 
-        <section class="section-2">
-            <?php
-            echo '<div class="equipos">';
-            for ($i = 0; $i < $totalEquipos; $i += $equiposPorLinea) {
-                echo '<div class="linea linea' . ($i / $equiposPorLinea + 1) . '">';
-                for ($j = $i; $j < min($i + $equiposPorLinea, $totalEquipos); $j++) {
-                    $equipo = $equipos[$j];
-                    echo '<a href="?op=reserve">';
-                    echo '<div class="eq eq' . $equipo['id'] . '">';
-                    echo '<img src="public/img/pc.png" alt="pc' . $equipo['id'] . '">';
-                    echo '<label>' . $equipo['name'] . '</label>';
-                    echo '<p>' . $equipo['status'] . '</p>';
-                    echo '</div>';
-                    echo '</a>';
-                }
-                echo '</div>';
-            }
-            echo '</div>';
-            ?>
+        <!-- tuve que realizar unos cambios desde aqui para hacer pruebas pero sigue funcionando de la misma manera
+            pase algunas de las funciones al home.js, nada del otro mundo-->
+       <!--Tuve que realizar unos cambios para que funcionara bien lo del status-->
+       <section class="section-2">
+            <div class="equipos">
+                <?php for ($i = 0; $i < $totalEquipos; $i += $equiposPorLinea) : ?>
+                    <div class="linea linea<?= ($i / $equiposPorLinea + 1) ?>">
+                        <?php for ($j = $i; $j < min($i + $equiposPorLinea, $totalEquipos); $j++) :
+                            $equipo = $equipos[$j]; ?>
+                                 <?php
+                                // Agrega una clase basada en el estado
+                                $statusClass = ($equipo['status'] == 'disponible') ? 'available' : 'occupied'; ?>
+                                <div class="eq eq<?= $equipo['id'] ?> <?= $statusClass ?>">
+                                <img id="equipo-<?= $equipo['id'] ?>" src="public/img/pc.png" alt="pc<?= $equipo['id'] ?>" style="cursor: pointer;">
+                                <label><?= $equipo['name'] ?></label>
+                                <p><?= $equipo['status'] ?></p>
+                            </div>
+                        <?php endfor; ?>
+                    </div>
+                <?php endfor; ?>
+            </div>
         </section>
-    </section>
-    <script src="public/js/home.js"></script>
-</body>
+
+
+        <script src="public/js/home.js"></script>
+        <script src="public/js/reloj.js"></script>
+    </body>
 
 </html>

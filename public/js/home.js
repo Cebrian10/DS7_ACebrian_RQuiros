@@ -1,31 +1,38 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     const salonSelect = document.getElementById('salonSelect');
-//     const equipos = document.querySelectorAll('.eq');
+document.addEventListener('DOMContentLoaded', function() {
+    const equipos = document.querySelectorAll('.eq img');
 
-//     salonSelect.addEventListener('change', function() {
-//         const selectedSalonId = salonSelect.value;
+    equipos.forEach(function(equipo) {
+        equipo.addEventListener('click', function() {
+            const equipoId = equipo.id.split('-')[1]; 
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = '?op=reserva';
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'equipo_id';
+            input.value = equipoId;
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        });
+    });
+    
+});
 
-//         equipos.forEach(equipo => {
-//             const id = equipo.classList[1]; // Obtén el id del equipo
-//             if (id === 'eq' + selectedSalonId) {
-//                 equipo.style.display = 'block'; // Mostrar el equipo si coincide
-//             } else {
-//                 equipo.style.display = 'none'; // Ocultar los demás equipos
-//             }
-//         });
-//     });
+document.addEventListener('DOMContentLoaded', function() {
+    let equipos = document.querySelectorAll('.eq');
 
-//     // Oculta todas las computadoras al principio
-//     equipos.forEach(equipo => {
-//         equipo.style.display = 'none';
-//     });
+    equipos.forEach(function(equipo) {
+        // Verifica el texto dentro del párrafo para determinar el estado
+        if (equipo.querySelector('p').innerText === 'disponible') {
+            equipo.classList.add('available'); //si el equipo esta disponible, añande la clase 'avaible'
+        } else {
+            equipo.classList.add('occupied');//si no, añade la clase 'occupied'
+        }
+    });
+});
 
-//     // Muestra las del salón predeterminado (si lo hay)
-//     const selectedSalonId = salonSelect.value;
-//     equipos.forEach(equipo => {
-//         const id = equipo.classList[1];
-//         if (id === 'eq' + selectedSalonId) {
-//             equipo.style.display = 'block';
-//         }
-//     });
-// });
+
+

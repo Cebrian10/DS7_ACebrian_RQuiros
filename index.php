@@ -1,5 +1,4 @@
 <?php
-
 require_once 'controller/Controller.php';
 
 $controller = new Controller();
@@ -20,12 +19,13 @@ if (isset($_GET['op'])){
             break;
         case "registerController": $controller->RegisterController();
             break;
-        // case "getComputers": $controller->GetComputersController();
-        //     break;
-        // case "getSalones": $controller->GetSalonesController();
-        //     break;
         case "logout": $controller->Logout();
             break;
+        case "reserva": $controller->Reserva();
+            break;
+        case "confirm_reserva": $controller->ConfirmarReserva();
+            break;
+
         default: $controller->Home();
             break;
     }

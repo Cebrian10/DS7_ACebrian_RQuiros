@@ -139,4 +139,12 @@ class Model
             die($e->getMessage());
         }
     }
+    public function GetComputerByIdModel($equipo_id){
+    $pdo = DB::StartUp();
+    $sql = "SELECT * FROM computadoras WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$equipo_id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

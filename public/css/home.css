@@ -112,11 +112,15 @@ nav {
                 text-align: center;
                 align-items: center;
 
-                & p {
-                    margin: 0;
-                    color: green;
-                }
             }
+            .available p {
+                color: green; 
+            }
+            
+            .occupied p {
+                color: red;
+            }
+            
         }
 
         & img {
@@ -124,3 +128,5 @@ nav {
         }
     }
 }
+
+
