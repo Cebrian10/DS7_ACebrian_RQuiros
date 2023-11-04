@@ -30,13 +30,19 @@ $reserves = $controller->ReserveListController();
                 <th>Día</th>
                 <th>Hora de inicio</th>
                 <th>Hora de fin</th>
-                <th>Nombre de Usuario</th>
+                <th>Nombre de usuario</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($reserves as $reserve) : ?>
                 <tr>
-                    <td><?php echo $reserve['day']; ?></td>
+                    <td>
+                        <?php
+                         $fecha = $reserve['day']; 
+                         $fecha_formateada = date('d-m-Y', strtotime($fecha));
+                         echo''.$fecha_formateada.'';
+                         ?>
+                    </td>
                     <td><?php echo $reserve['start_time']; ?></td>
                     <td><?php echo $reserve['end_time']; ?></td>
                     <td><?php echo $reserve['name_user']; ?></td>

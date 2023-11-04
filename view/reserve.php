@@ -28,8 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </div>
 
-
-
     <?php
     if ($equipo) {
         //cuando se elige el equipo mostrara el formulario

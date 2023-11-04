@@ -28,8 +28,7 @@ CREATE TABLE usuarios (
 
 -- Insertar datos en la tabla 'usuarios'
 INSERT INTO usuarios (name, email, pass, rol) VALUES
-('admin','admin@gmail.com','$2y$10$MRX.QaY3I7D5cfDZEcDiEOu4dmFXQIYg0QDHsDfVzRvipxUKjqYcq','adm'),
-('user','user@gmail.com','$2y$10$2zHzBXIUg2M6qrU93bqhe.3qgYux9mUITUa7yv5j4bOFMoUO9T3tO','usr');
+('admin','admin@gmail.com','$2y$10$MRX.QaY3I7D5cfDZEcDiEOu4dmFXQIYg0QDHsDfVzRvipxUKjqYcq','adm');
 
 -- Crear la tabla 'reservas'
 CREATE TABLE reservas (
@@ -55,33 +54,33 @@ CREATE TABLE computadoras (
 
 -- Insertar registros en la tabla 'computadoras'
 INSERT INTO computadoras (img, name, status, id_salon) VALUES 
-('1_pc.png', 'Equipo 401-1', 'disponible', 1),
-('2_pc.png', 'Equipo 401-2', 'disponible', 1),
-('3_pc.png', 'Equipo 401-3', 'disponible', 1),
-('4_pc.png', 'Equipo 401-4', 'disponible', 1),
-('5_pc.png', 'Equipo 401-5', 'disponible', 1),
-('6_pc.png', 'Equipo 401-6', 'disponible', 1),
-('7_pc.png', 'Equipo 401-7', 'disponible', 1),
-('8_pc.png', 'Equipo 401-8', 'disponible', 1),
-('9_pc.png', 'Equipo 401-9', 'disponible', 1),
-('10_pc.png', 'Equipo 401-10', 'disponible', 1),
-('11_pc.png', 'Equipo 401-11', 'disponible', 1),
-('12_pc.png', 'Equipo 401-12', 'disponible', 1),
-('13_pc.png', 'Equipo 401-13', 'disponible', 1),
-('14_pc.png', 'Equipo 401-14', 'disponible', 1),
-('15_pc.png', 'Equipo 401-15', 'disponible', 1),
-('16_pc.png', 'Equipo 402-1', 'disponible', 2),
-('17_pc.png', 'Equipo 402-2', 'disponible', 2),
-('18_pc.png', 'Equipo 402-3', 'disponible', 2),
-('19_pc.png', 'Equipo 402-4', 'disponible', 2),
-('20_pc.png', 'Equipo 402-5', 'disponible', 2),
-('21_pc.png', 'Equipo 402-6', 'disponible', 2),
-('22_pc.png', 'Equipo 402-7', 'disponible', 2),
-('23_pc.png', 'Equipo 402-8', 'disponible', 2),
-('24_pc.png', 'Equipo 402-9', 'disponible', 2),
-('25_pc.png', 'Equipo 402-10', 'disponible', 2),
-('26_pc.png', 'Equipo 402-11', 'disponible', 2),
-('27_pc.png', 'Equipo 402-12', 'disponible', 2),
-('28_pc.png', 'Equipo 402-13', 'disponible', 2),
-('29_pc.png', 'Equipo 402-14', 'disponible', 2),
-('30_pc.png', 'Equipo 402-15', 'disponible', 2);
+('1_pc.png', 'Equipo 401-1', 'Disponible', 1),
+('2_pc.png', 'Equipo 401-2', 'Disponible', 1),
+('3_pc.png', 'Equipo 401-3', 'Disponible', 1),
+('4_pc.png', 'Equipo 401-4', 'Disponible', 1),
+('5_pc.png', 'Equipo 401-5', 'Disponible', 1),
+('6_pc.png', 'Equipo 401-6', 'Disponible', 1),
+('7_pc.png', 'Equipo 401-7', 'Disponible', 1),
+('8_pc.png', 'Equipo 401-8', 'Disponible', 1),
+('9_pc.png', 'Equipo 401-9', 'Disponible', 1),
+('10_pc.png', 'Equipo 401-10', 'Disponible', 1),
+('11_pc.png', 'Equipo 401-11', 'Disponible', 1),
+('12_pc.png', 'Equipo 401-12', 'Disponible', 1),
+('13_pc.png', 'Equipo 401-13', 'Disponible', 1),
+('14_pc.png', 'Equipo 401-14', 'Disponible', 1),
+('15_pc.png', 'Equipo 401-15', 'Disponible', 1),
+('16_pc.png', 'Equipo 402-1', 'Disponible', 2),
+('17_pc.png', 'Equipo 402-2', 'Disponible', 2),
+('18_pc.png', 'Equipo 402-3', 'Disponible', 2),
+('19_pc.png', 'Equipo 402-4', 'Disponible', 2),
+('20_pc.png', 'Equipo 402-5', 'Disponible', 2),
+('21_pc.png', 'Equipo 402-6', 'Disponible', 2),
+('22_pc.png', 'Equipo 402-7', 'Disponible', 2),
+('23_pc.png', 'Equipo 402-8', 'Disponible', 2),
+('24_pc.png', 'Equipo 402-9', 'Disponible', 2),
+('25_pc.png', 'Equipo 402-10', 'Disponible', 2),
+('26_pc.png', 'Equipo 402-11', 'Disponible', 2),
+('27_pc.png', 'Equipo 402-12', 'Disponible', 2),
+('28_pc.png', 'Equipo 402-13', 'Disponible', 2),
+('29_pc.png', 'Equipo 402-14', 'Disponible', 2),
+('30_pc.png', 'Equipo 402-15', 'Disponible', 2);

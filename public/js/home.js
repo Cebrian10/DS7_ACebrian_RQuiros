@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     equipos.forEach(function(equipo) {
         // Verifica el texto dentro del párrafo para determinar el estado
-        if (equipo.querySelector('p').innerText === 'disponible') {
+        if (equipo.querySelector('p').innerText === 'Disponible') {
             equipo.classList.add('available'); //si el equipo esta disponible, añande la clase 'avaible'
             equipo.style.cursor = 'pointer';
         } else {

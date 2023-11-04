@@ -174,7 +174,6 @@ class Model
             ));
             return $result;
         } catch (Exception $e) {
-            session_destroy();
             die($e->getMessage());
         }
     }
