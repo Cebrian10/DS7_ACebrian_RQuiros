@@ -36,7 +36,7 @@ CREATE TABLE reservas (
     day DATE,
     start_time TIME,
     end_time TIME,
-    id_usuarios INT,
+    id_usuarios INT NOT NULL,
     FOREIGN KEY (id_usuarios) REFERENCES usuarios(id)
 );
 

@@ -89,7 +89,7 @@ $totalEquipos = count($equipos);
                             $equipo = $equipos[$j]; ?>
                             <?php
                             // Agrega una clase basada en el estado
-                            $statusClass = ($equipo['status'] == 'disponible') ? 'available' : 'occupied'; ?>
+                            $statusClass = ($equipo['status'] == 'Disponible') ? 'available' : 'occupied'; ?>
                             <div class="eq eq<?= $equipo['id'] ?> <?= $statusClass ?>" data-salon-id="<?= $equipo['id_salon'] ?>">
                                 <img id="equipo-<?= $equipo['id'] ?>" src="public/img/pc.png" alt="pc<?= $equipo['id'] ?>">
                                 <label><?= $equipo['name'] ?></label>
