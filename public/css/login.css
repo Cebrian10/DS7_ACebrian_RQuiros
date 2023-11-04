@@ -110,6 +110,12 @@ form {
         border: none;
         border-radius: 5px;
         font-weight: bold;
+        cursor: pointer;
+        transition: all 1s ease;       
+    }
+
+    & button:hover {        
+        background: #e2d7d6;
     }
 }
 

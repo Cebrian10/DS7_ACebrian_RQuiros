@@ -21,7 +21,7 @@ if (isset($_GET['op'])){
             break;
         case "logout": $controller->Logout();
             break;
-        case "reserva": $controller->Reserva();
+        case "reserve": $controller->Reserve();
             break;
         case "confirm_reserva": $controller->ConfirmarReserva();
             break;

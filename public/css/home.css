@@ -113,12 +113,14 @@ nav {
                 align-items: center;
 
             }
-            .available p {
+            .available p {                
                 color: green; 
+                margin: 0;
             }
             
-            .occupied p {
+            .occupied p {                
                 color: red;
+                margin: 0;
             }
             
         }

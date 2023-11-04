@@ -98,25 +98,12 @@ class Model
         }
     }
 
-    // public function GetComputersModel()
-    // {
-    //     try {
-    //         $sql = "SELECT * FROM computadoras";
-    //         $stmt = $this->pdo->prepare($sql);
-    //         $stmt->execute();
-    //         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //         return $result;
-    //     } catch (Exception $e) {
-    //         session_destroy();
-    //         die($e->getMessage());
-    //     }
-    // }
-
-    public function GetComputersModel($selectedSalonId) {
+    public function GetComputersModel()
+    {
         try {
-            $sql = "SELECT * FROM computadoras WHERE id_salon = ?";
+            $sql = "SELECT * FROM computadoras";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$selectedSalonId]);
+            $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (Exception $e) {
@@ -124,7 +111,26 @@ class Model
             die($e->getMessage());
         }
     }
-    
+
+    public function ObtenerDatosUser(Model $data)
+    {
+        try {
+            $sql = "SELECT id, name, email, rol FROM usuarios WHERE email = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$data->email]);
+            $result = $stmt->fetch();
+
+            if ($result) {
+                $_SESSION['user_id'] = $result['id'];
+                $_SESSION['user_name'] = $result['name'];
+                $_SESSION['user_email'] = $result['email'];
+                $_SESSION['user_rol'] = $result['rol'];
+            }
+        } catch (Exception $e) {
+            session_destroy();
+            die($e->getMessage());
+        }
+    }
 
     public function GetSalonesModel()
     {
@@ -139,12 +145,13 @@ class Model
             die($e->getMessage());
         }
     }
-    public function GetComputerByIdModel($equipo_id){
-    $pdo = DB::StartUp();
-    $sql = "SELECT * FROM computadoras WHERE id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$equipo_id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 
+    public function GetComputerByIdModel($equipo_id)
+    {
+        $pdo = DB::StartUp();
+        $sql = "SELECT * FROM computadoras WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$equipo_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

@@ -30,27 +30,24 @@ class Controller
         require('view/register.php');
     }
 
-    public function Reserva()
+    public function Reserve()
     {
-        require('view/reserva.php');
+        require('view/reserve.php');
     }
 
     public function RegisterController()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $pass = $_POST['pass'];
-
-            if (!empty($name) && !empty($email) && !empty($pass)) {
+            if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['pass'])) {
+            } else {
                 $usuario = new Model();
-                $usuario->name = $name;
-                $usuario->email = $email;
-                $usuario->pass = $pass;
-                $usuario->hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+
+                $usuario->name = $_REQUEST['name'];
+                $usuario->email = $_REQUEST['email'];
+                $usuario->pass = $_REQUEST['pass'];
+                $usuario->hashedPassword = password_hash($usuario->pass, PASSWORD_DEFAULT);
 
                 $result = $this->model->RegisterModel($usuario);
-
                 if ($result === true) {
                     header('Location: ?op=login&msg=Registro Exitoso');
                 } else {
@@ -63,19 +60,25 @@ class Controller
     public function LoginController()
     {
         $usuario = new Model();
+
         $usuario->email = $_REQUEST['email'];
         $usuario->pass = $_REQUEST['pass'];
 
         if ($this->model->LoginModel($usuario)) {
+            // if ($this->model->VerificarSesion($usuario)) {
+            $this->model->ObtenerDatosUser($usuario);
             header('Location: ?op=home&msg=Bienvenido');
+            // } else {
+            //     header('Location: ?op=login&msg=Error... Sesión Existente');
+            // }
         } else {
             header('Location: ?op=login&msg=Error... Credenciales Inválidas');
         }
     }
 
-    public function GetComputersController($selectedSalonId)
+    public function GetComputersController()
     {
-        return $this->model->GetComputersModel($selectedSalonId);
+        return $this->model->GetComputersModel();
     }
 
     public function GetSalonesController()
