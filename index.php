@@ -13,8 +13,6 @@ if (isset($_GET['op'])){
             break;
         case "loginController": $controller->LoginController();
             break;
-        case "profile": $controller->Profile();
-            break;        
         case "register": $controller->Register();
             break;
         case "registerController": $controller->RegisterController();
@@ -26,6 +24,8 @@ if (isset($_GET['op'])){
         case "reserveController": $controller->ReserveController();
             break;
         case "reserveList": $controller->ReserveList();
+            break;
+        case "noRegistrado": $controller->NoRegistrado();
             break;
         default: $controller->Home();
             break;

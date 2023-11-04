@@ -55,7 +55,6 @@ $totalEquipos = count($equipos);
             <a href="?op=login"><button type="button">Iniciar Sesion</button></a>
             <a href="?op=logout"><button type="button">Cerrar Sesion</button></a>
         </div>
-
     </nav>
 
     <div class="titulo">

@@ -34,6 +34,11 @@ class Controller
     {
         require('view/reserve-list.php');
     }
+    
+    public function NoRegistrado()
+    {
+        require('view/no-registrado.php');
+    }
 
     public function RegisterController()
     {
@@ -128,7 +133,7 @@ class Controller
                     header('Location: ?op=home&msg=Equipo Reservado');
                 }
                 else {
-                    header('Location: ?op=home&msg=El equipo no se pudo reservar');
+                    header('Location: ?op=reserve&msg=El equipo no se pudo reservar');
                 }
             }
         }

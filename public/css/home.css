@@ -39,6 +39,7 @@ nav {
     height: 50px;
     display: flex;
     justify-content: space-between;
+    box-shadow: 0px 0px 5px 0px #000000;
 
     & div {
         display: flex;
@@ -51,7 +52,7 @@ nav {
         & img {
             max-width: 100%;
             max-height: 100%;
-        }        
+        }
 
         & label {
             font-family: 'Crete Round', serif;
@@ -80,7 +81,7 @@ nav {
 
 .titulo {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 35px;
 }
 
 .section-principal {
@@ -137,7 +138,14 @@ nav {
                 flex-direction: column;
                 text-align: center;
                 align-items: center;
+                box-shadow: none;
+                padding: 5px;
+                transition: box-shadow 0.3s, border-radius 0.3s;
+            }
 
+            & .eq:hover {
+                box-shadow: 5px 5px 10px 1px #000000;
+                border-radius: 5%;
             }
 
             .available p {
@@ -149,7 +157,6 @@ nav {
                 color: red;
                 margin: 0;
             }
-
         }
 
         & img {

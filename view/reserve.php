@@ -6,6 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $delete = $equipo_id  . '_';
     $img = str_replace($delete, '', $equipo['img']);
+
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: ?op=noRegistrado");
+        exit;
+    }
 }
 ?>
 
@@ -32,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($equipo) {
         //cuando se elige el equipo mostrara el formulario
         echo '<section>';
-        echo '<h1>Formulario de Reserva</h1>';
+        echo '<h1>Formulario de Reserva</h1>';        
 
         echo '<form action="?op=reserveController" method="post" class="section-principal">
                 <section class="section-1">
@@ -61,9 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          
                 <button type="submit">Confirmar Reserva</button>
             </form>';
-    } else {
     }
-
     ?>
 </body>
 

@@ -87,7 +87,7 @@ section {
         font-weight: bold;
         grid-column: span 2;
         cursor: pointer;
-        transition: all 1s ease;       
+        transition: all 0.3s ease;    
     }
 
     & button:hover {        

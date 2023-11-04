@@ -174,7 +174,7 @@ class Model
             ));
             return $result;
         } catch (Exception $e) {
-            die($e->getMessage());
+            return false;
         }
     }
 
