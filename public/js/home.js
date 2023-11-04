@@ -1,3 +1,12 @@
+document.addEventListener("DOMContentLoaded", function() {
+    var alert = document.querySelector('.alerta');
+    if (alert) {
+        setTimeout(function() {
+            alert.style.display = 'none';
+        }, 3000);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const equipos = document.querySelectorAll('.eq img');
 

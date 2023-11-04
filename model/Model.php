@@ -11,6 +11,11 @@ class Model
     public $pass;
     public $hashedPassword;
     public $rol;
+    public $equipo_id;
+    public $day;
+    public $start_time;
+    public $end_time;
+    public $id_usuarios;
     public function __CONSTRUCT()
     {
         try {
@@ -107,7 +112,6 @@ class Model
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (Exception $e) {
-            session_destroy();
             die($e->getMessage());
         }
     }
@@ -141,17 +145,64 @@ class Model
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (Exception $e) {
-            session_destroy();
             die($e->getMessage());
         }
     }
 
     public function GetComputerByIdModel($equipo_id)
     {
-        $pdo = DB::StartUp();
-        $sql = "SELECT * FROM computadoras WHERE id = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$equipo_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT * FROM computadoras WHERE id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$equipo_id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function ReserveModel(Model $data)
+    {
+        try {
+            $sql = "INSERT INTO reservas (day, start_time, end_time, id_usuarios) VALUES (?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $result = $stmt->execute(array(
+                $data->day,
+                $data->start_time,
+                $data->end_time,
+                $data->id_usuarios = $_SESSION['user_id']
+            ));
+            return $result;
+        } catch (Exception $e) {
+            session_destroy();
+            die($e->getMessage());
+        }
+    }
+
+    public function ReservarEquipo($equipo_id)
+    {
+        try {
+            $sql = "UPDATE computadoras SET status = 'Ocupado' WHERE id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$equipo_id]);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function ReserveListModel()
+    {
+        try {
+            $sql = 
+            "SELECT reservas.day, reservas.start_time, reservas.end_time, usuarios.name AS name_user
+            FROM reservas
+            INNER JOIN usuarios ON reservas.id_usuarios = usuarios.ID;";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 }

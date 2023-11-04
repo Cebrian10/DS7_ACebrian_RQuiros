@@ -20,11 +20,6 @@ class Controller
         require('view/login.php');
     }
 
-    public function Profile()
-    {
-        require('view/profile.php');
-    }
-
     public function Register()
     {
         require('view/register.php');
@@ -33,6 +28,11 @@ class Controller
     public function Reserve()
     {
         require('view/reserve.php');
+    }
+
+    public function ReserveList()
+    {
+        require('view/reserve-list.php');
     }
 
     public function RegisterController()
@@ -65,12 +65,12 @@ class Controller
         $usuario->pass = $_REQUEST['pass'];
 
         if ($this->model->LoginModel($usuario)) {
-            // if ($this->model->VerificarSesion($usuario)) {
+            if ($this->model->VerificarSesion($usuario)) {
             $this->model->ObtenerDatosUser($usuario);
-            header('Location: ?op=home&msg=Bienvenido');
-            // } else {
-            //     header('Location: ?op=login&msg=Error... Sesión Existente');
-            // }
+            header('Location: ?op=home');
+            } else {
+                header('Location: ?op=login&msg=Error... Sesión Existente');
+            }
         } else {
             header('Location: ?op=login&msg=Error... Credenciales Inválidas');
         }
@@ -104,52 +104,38 @@ class Controller
         header('Location: ?op=home');
     }
 
-
-
-
-    //A partir de aqui funciona la gestion de reservas
-
-    //Obtiene la informacion de la computdora a traves de su ID
     public function GetComputerById($equipo_id)
     {
         return $this->model->GetComputerByIdModel($equipo_id);
     }
 
-
-    //Marca la computadora elegida como "ocupada" en la base de datos
-    public function ReservarEquipo($equipo_id)
+    public function ReserveController()
     {
-        try {
-            $pdo = DB::StartUp();
-            $sql = "UPDATE computadoras SET status = 'Ocupado' WHERE id = ?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$equipo_id]);
-        } catch (Exception $e) {
-            die($e->getMessage());
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (empty($_POST['equipo_id']) || empty($_POST['day']) || empty($_POST['start_time']) || empty($_POST['end_time'])) {
+            } else {
+                $usuario = new Model();
+
+                $usuario->equipo_id = $_REQUEST['equipo_id'];
+                $usuario->day = $_REQUEST['day'];
+                $usuario->start_time = $_REQUEST['start_time'];
+                $usuario->end_time = $_REQUEST['end_time'];
+
+                $result = $this->model->ReserveModel($usuario);
+
+                if ($result) {
+                    $this->model->ReservarEquipo($usuario->equipo_id);
+                    header('Location: ?op=home&msg=Equipo Reservado');
+                }
+                else {
+                    header('Location: ?op=home&msg=El equipo no se pudo reservar');
+                }
+            }
         }
     }
 
-    //Procesa el formulario de confirmacion de reserva
-    public function ConfirmarReserva()
+    public function ReserveListController()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $equipo_id = $_POST['equipo_id'];
-            $day = $_POST['day'];
-            $start_time = $_POST['start_time'];
-            $end_time = $_POST['end_time'];
-
-            try {
-                $pdo = DB::StartUp();
-                $sql = "INSERT INTO reservas (day, start_time, end_time, id_usuarios) VALUES (?, ?, ?, ?)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$day, $start_time, $end_time, $_SESSION['user_id']]);
-
-                $this->ReservarEquipo($equipo_id);
-
-                header('Location: ?op=home');
-            } catch (Exception $e) {
-                die($e->getMessage());
-            }
-        }
+        return $this->model->ReserveListModel();
     }
 }

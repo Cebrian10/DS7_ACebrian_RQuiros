@@ -20,23 +20,37 @@ $totalEquipos = count($equipos);
 
 <body>
 
+    <?php
+    if (isset($_GET['msg'])) {
+        $mensaje = htmlspecialchars($_GET['msg']);
+        if ($mensaje === 'Equipo Reservado' || $mensaje === 'Bienvenido') {
+            $clase_alerta = 'alerta-success';
+        } else {
+            $clase_alerta = 'alerta-danger';
+        }
+        echo '<div class=" alerta ' . $clase_alerta . ' "><p>' . $mensaje . '</p></div>';
+    }
+    ?>
+
     <nav>
         <div class="img-label">
             <img src="public/img/utp-icon.png" alt="utp">
-            <a href="?op=profile">
-                <label>
-                    <?php
-                    if (isset($_SESSION['user_name'])) {
-                        echo $_SESSION['user_name'];
-                    } else {
-                        echo 'Visitante';
-                    }
-                    ?>
-                </label>
-
-            </a>
+            <label>
+                <?php
+                if (isset($_SESSION['user_name'])) {
+                    echo $_SESSION['user_name'];
+                } else {
+                    echo 'Visitante';
+                }
+                ?>
+            </label>
         </div>
         <div class="botones">
+            <?php
+            if (!empty($_SESSION['user_id']) && $_SESSION['user_rol'] == 'adm') {
+                echo '<a href="?op=reserveList"><button type="button">Reservas</button></a>';
+            }
+            ?>
             <a href="?op=register"><button type="button">Registrarse</button></a>
             <a href="?op=login"><button type="button">Iniciar Sesion</button></a>
             <a href="?op=logout"><button type="button">Cerrar Sesion</button></a>

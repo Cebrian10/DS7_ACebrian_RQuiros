@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<section>';
         echo '<h1>Formulario de Reserva</h1>';
 
-        echo '<form action="?op=confirm_reserva" method="post" class="section-principal">
+        echo '<form action="?op=reserveController" method="post" class="section-principal">
                 <section class="section-1">
                     <img src="public/img/' . $img . '">
                     <h2>' . $equipo['name'] . '</h2>

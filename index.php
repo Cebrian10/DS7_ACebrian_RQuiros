@@ -23,9 +23,10 @@ if (isset($_GET['op'])){
             break;
         case "reserve": $controller->Reserve();
             break;
-        case "confirm_reserva": $controller->ConfirmarReserva();
+        case "reserveController": $controller->ReserveController();
             break;
-
+        case "reserveList": $controller->ReserveList();
+            break;
         default: $controller->Home();
             break;
     }
