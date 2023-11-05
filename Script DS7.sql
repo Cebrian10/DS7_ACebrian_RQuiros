@@ -30,16 +30,6 @@ CREATE TABLE usuarios (
 INSERT INTO usuarios (name, email, pass, rol) VALUES
 ('admin','admin@gmail.com','$2y$10$MRX.QaY3I7D5cfDZEcDiEOu4dmFXQIYg0QDHsDfVzRvipxUKjqYcq','adm');
 
--- Crear la tabla 'reservas'
-CREATE TABLE reservas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    day DATE,
-    start_time TIME,
-    end_time TIME,
-    id_usuarios INT NOT NULL,
-    FOREIGN KEY (id_usuarios) REFERENCES usuarios(id)
-);
-
 -- Crear la tabla 'computadoras'
 CREATE TABLE computadoras (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -47,9 +37,7 @@ CREATE TABLE computadoras (
     name VARCHAR(255),
     status VARCHAR(255),
     id_salon INT,
-    FOREIGN KEY (id_salon) REFERENCES salones(id),
-    id_reserva INT,
-    FOREIGN KEY (id_reserva) REFERENCES reservas(id)
+    FOREIGN KEY (id_salon) REFERENCES salones(id)
 );
 
 -- Insertar registros en la tabla 'computadoras'
@@ -84,3 +72,15 @@ INSERT INTO computadoras (img, name, status, id_salon) VALUES
 ('28_pc.png', 'Equipo 402-13', 'Disponible', 2),
 ('29_pc.png', 'Equipo 402-14', 'Disponible', 2),
 ('30_pc.png', 'Equipo 402-15', 'Disponible', 2);
+
+-- Crear la tabla 'reservas'
+CREATE TABLE reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    day DATE,
+    start_time TIME,
+    end_time TIME,
+    id_usuarios INT,
+    FOREIGN KEY (id_usuarios) REFERENCES usuarios(id),
+    id_equipos INT,
+    FOREIGN KEY (id_equipos) REFERENCES computadoras(id)
+);

@@ -25,41 +25,6 @@ class Model
         }
     }
 
-    public function RegisterModel(Model $data)
-    {
-        if (!$this->VerificarExistenciaEmail($data)) {
-            try {
-                $sql = "INSERT INTO usuarios (name, email, pass, rol) VALUES (?,?,?,?)";
-                $stmt = $this->pdo->prepare($sql);
-                $result = $stmt->execute(array(
-                    $data->name,
-                    $data->email,
-                    $data->hashedPassword,
-                    $data->rol = 'usr'
-                ));
-                return $result;
-            } catch (Exception $e) {
-                die($e->getMessage());
-            }
-        } else {
-            return false;
-        }
-    }
-
-
-    public function VerificarExistenciaEmail(Model $data)
-    {
-        try {
-            $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$data->email]);
-            $count = $stmt->fetchColumn();
-            return $count > 0;
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
-    }
-
     public function LoginModel(Model $data)
     {
         try {
@@ -103,19 +68,6 @@ class Model
         }
     }
 
-    public function GetComputersModel()
-    {
-        try {
-            $sql = "SELECT * FROM computadoras";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
-    }
-
     public function ObtenerDatosUser(Model $data)
     {
         try {
@@ -132,6 +84,82 @@ class Model
             }
         } catch (Exception $e) {
             session_destroy();
+            die($e->getMessage());
+        }
+    }
+
+    public function RegisterModel(Model $data)
+    {
+        if (!$this->VerificarExistenciaEmail($data)) {
+            try {
+                $sql = "INSERT INTO usuarios (name, email, pass, rol) VALUES (?,?,?,?)";
+                $stmt = $this->pdo->prepare($sql);
+                $result = $stmt->execute(array(
+                    $data->name,
+                    $data->email,
+                    $data->hashedPassword,
+                    $data->rol = 'usr'
+                ));
+                return $result;
+            } catch (Exception $e) {
+                die($e->getMessage());
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function VerificarExistenciaEmail(Model $data)
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$data->email]);
+            $count = $stmt->fetchColumn();
+            return $count > 0;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function ReserveModel(Model $data)
+    {
+        try {
+            $sql = "INSERT INTO reservas (day, start_time, end_time, id_usuarios, id_equipos) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $result = $stmt->execute(array(
+                $data->day,
+                $data->start_time,
+                $data->end_time,
+                $data->id_usuarios = $_SESSION['user_id'],
+                $data->equipo_id
+            ));
+            return $result;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function ReservarEquipo($equipo_id)
+    {
+        try {
+            $sql = "UPDATE computadoras SET status = 'Ocupado' WHERE id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$equipo_id]);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function GetComputersModel()
+    {
+        try {
+            $sql = "SELECT * FROM computadoras";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
@@ -161,44 +189,44 @@ class Model
         }
     }
 
-    public function ReserveModel(Model $data)
+    public function GetReserveModel()
     {
         try {
-            $sql = "INSERT INTO reservas (day, start_time, end_time, id_usuarios) VALUES (?, ?, ?, ?)";
-            $stmt = $this->pdo->prepare($sql);
-            $result = $stmt->execute(array(
-                $data->day,
-                $data->start_time,
-                $data->end_time,
-                $data->id_usuarios = $_SESSION['user_id']
-            ));
-            return $result;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    public function ReservarEquipo($equipo_id)
-    {
-        try {
-            $sql = "UPDATE computadoras SET status = 'Ocupado' WHERE id = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$equipo_id]);
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
-    }
-
-    public function ReserveListModel()
-    {
-        try {
-            $sql = 
-            "SELECT reservas.day, reservas.start_time, reservas.end_time, usuarios.name AS name_user
+            $sql =
+                "SELECT reservas.day, reservas.start_time, reservas.end_time, usuarios.name AS name_user
             FROM reservas
             INNER JOIN usuarios ON reservas.id_usuarios = usuarios.ID;";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function GetReservesModel()
+    {
+        try {
+            $sql = "SELECT * FROM reservas";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function UpdateStatusComputer($status, $equipo_id)
+    {
+        try {
+            $sql = "UPDATE computadoras SET status = ? WHERE id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $result = $stmt->execute(array(
+                $status,
+                $equipo_id                
+            ));
             return $result;
         } catch (Exception $e) {
             die($e->getMessage());

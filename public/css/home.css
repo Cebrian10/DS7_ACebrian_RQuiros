@@ -164,3 +164,21 @@ nav {
         }
     }
 }
+
+footer {
+    box-shadow: 0px 0px 5px 0px #000000;
+    display: flex;
+    justify-content: space-around;
+    background-color: #d5e3ea;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+
+    & div {
+        display: flex;        
+    }    
+}
+
+.fuente {
+        font-family: 'Crete Round', serif;
+    }

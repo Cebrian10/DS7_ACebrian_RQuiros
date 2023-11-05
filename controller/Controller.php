@@ -20,9 +20,19 @@ class Controller
         require('view/login.php');
     }
 
+    public function NoRegistrado()
+    {
+        require('view/no-registrado.php');
+    }
+
     public function Register()
     {
         require('view/register.php');
+    }
+
+    public function ReserveList()
+    {
+        require('view/reserve-list.php');
     }
 
     public function Reserve()
@@ -30,16 +40,24 @@ class Controller
         require('view/reserve.php');
     }
 
-    public function ReserveList()
+    public function LoginController()
     {
-        require('view/reserve-list.php');
-    }
-    
-    public function NoRegistrado()
-    {
-        require('view/no-registrado.php');
-    }
+        $usuario = new Model();
 
+        $usuario->email = $_REQUEST['email'];
+        $usuario->pass = $_REQUEST['pass'];
+
+        if ($this->model->LoginModel($usuario)) {
+            if ($this->model->VerificarSesion($usuario)) {
+                $this->model->ObtenerDatosUser($usuario);
+                header('Location: ?op=home');
+            } else {
+                header('Location: ?op=login&msg=Error... Sesión Existente');
+            }
+        } else {
+            header('Location: ?op=login&msg=Error... Credenciales Inválidas');
+        }
+    }
     public function RegisterController()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -62,33 +80,28 @@ class Controller
         }
     }
 
-    public function LoginController()
+    public function ReserveController()
     {
-        $usuario = new Model();
-
-        $usuario->email = $_REQUEST['email'];
-        $usuario->pass = $_REQUEST['pass'];
-
-        if ($this->model->LoginModel($usuario)) {
-            if ($this->model->VerificarSesion($usuario)) {
-            $this->model->ObtenerDatosUser($usuario);
-            header('Location: ?op=home');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (empty($_POST['equipo_id']) || empty($_POST['day']) || empty($_POST['start_time']) || empty($_POST['end_time'])) {
             } else {
-                header('Location: ?op=login&msg=Error... Sesión Existente');
+                $usuario = new Model();
+
+                $usuario->equipo_id = $_REQUEST['equipo_id'];
+                $usuario->day = $_REQUEST['day'];
+                $usuario->start_time = $_REQUEST['start_time'];
+                $usuario->end_time = $_REQUEST['end_time'];
+
+                $result = $this->model->ReserveModel($usuario);
+
+                if ($result) {
+                    $this->model->ReservarEquipo($usuario->equipo_id);
+                    header('Location: ?op=home&msg=Equipo Reservado');
+                } else {
+                    header('Location: ?op=reserve&msg=El equipo no se pudo reservar');
+                }
             }
-        } else {
-            header('Location: ?op=login&msg=Error... Credenciales Inválidas');
         }
-    }
-
-    public function GetComputersController()
-    {
-        return $this->model->GetComputersModel();
-    }
-
-    public function GetSalonesController()
-    {
-        return $this->model->GetSalonesModel();
     }
 
     public function Logout()
@@ -109,38 +122,43 @@ class Controller
         header('Location: ?op=home');
     }
 
+    public function GetComputersController()
+    {
+        return $this->model->GetComputersModel();
+    }
+
+    public function GetSalonesController()
+    {
+        return $this->model->GetSalonesModel();
+    }
+
     public function GetComputerById($equipo_id)
     {
         return $this->model->GetComputerByIdModel($equipo_id);
     }
 
-    public function ReserveController()
+    public function GetReserveController()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (empty($_POST['equipo_id']) || empty($_POST['day']) || empty($_POST['start_time']) || empty($_POST['end_time'])) {
-            } else {
-                $usuario = new Model();
-
-                $usuario->equipo_id = $_REQUEST['equipo_id'];
-                $usuario->day = $_REQUEST['day'];
-                $usuario->start_time = $_REQUEST['start_time'];
-                $usuario->end_time = $_REQUEST['end_time'];
-
-                $result = $this->model->ReserveModel($usuario);
-
-                if ($result) {
-                    $this->model->ReservarEquipo($usuario->equipo_id);
-                    header('Location: ?op=home&msg=Equipo Reservado');
-                }
-                else {
-                    header('Location: ?op=reserve&msg=El equipo no se pudo reservar');
-                }
-            }
-        }
+        return $this->model->GetReserveModel();
     }
 
-    public function ReserveListController()
+    public function GetTimeReserve()
     {
-        return $this->model->ReserveListModel();
+        date_default_timezone_set('America/Panama');
+        $dia_actual = date('Y-m-d'); // Año-Mes-Día
+        $hora_actual = date('H:i:s');  // Hora:Minutos:Segundos
+
+        $reservas = $this->model->GetReservesModel();
+
+        foreach ($reservas as $reserva) {
+
+            $fechaActual = $dia_actual . ' ' . $hora_actual;
+            $fechaFinalReserva = $reserva['day'] . ' ' . $reserva['end_time'];
+
+            if ($fechaActual > $fechaFinalReserva) {
+                $equipo_id = $reserva['id_equipos'];
+                $this->model->UpdateStatusComputer('Disponible', $equipo_id);
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ $controller = new Controller();
 $salones = $controller->GetSalonesController();
 $equipos = $controller->GetComputersController();
 
+$controller->GetTimeReserve();
+
 $equiposPorLinea = 5;
 $totalEquipos = count($equipos);
 ?>
@@ -15,7 +17,6 @@ $totalEquipos = count($equipos);
     <link rel="icon" type="image/png" href="public/img/utp-icon.png">
     <title>Reserva de Equipo</title>
     <link rel="stylesheet" href="public/css/home.css">
-    <link rel="stylesheet" href="public/css/reloj.css">
 </head>
 
 <body>
@@ -64,11 +65,6 @@ $totalEquipos = count($equipos);
     <section class="section-principal">
         <section class="section-1">
             <div class="selec-salon">
-                <div id="reloj">
-                    <span id="horas">00</span>:
-                    <span id="minutos">00</span>:
-                    <span id="segundos">00</span>
-                </div>
                 <label>Seleccionar salón</label>
                 <select name="select" id="salonSelect">
                     <?php
@@ -99,10 +95,19 @@ $totalEquipos = count($equipos);
                 <?php endfor; ?>
             </div>
         </section>
+    </section>
 
+    <footer>
+        <div>
+            <p class="fuente">Ameth Cebrián | 8-987-2235</p>
+        </div>
+        <p class="fuente">1LS131</p>
+        <div>
+            <p class="fuente">Rivaldo Quirós | 2-987-2235</p>
+        </div>
+    </footer>
 
-        <script src="public/js/home.js"></script>
-        <script src="public/js/reloj.js"></script>
+    <script src="public/js/home.js"></script>
 </body>
 
 </html>

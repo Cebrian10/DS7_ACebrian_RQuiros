@@ -1,6 +1,6 @@
 <?php
 $controller = new Controller();
-$reserves = $controller->ReserveListController();
+$reserves = $controller->GetReserveController();
 ?>
 
 <!DOCTYPE html>
